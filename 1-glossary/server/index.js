@@ -12,9 +12,11 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json())
 
 // Routes - get/post
-app.get('./fetch', (req, res) => {
+app.get('/fetch', (req, res) => {
   mongo.Dict.find({})
-    .then(glossary => console.log(glossary))
+    .then(glossary => {
+      res.json(glossary);
+    })
     .catch(err => console.log('Cannot fetch data', err));
 })
 

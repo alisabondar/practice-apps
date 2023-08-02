@@ -4,7 +4,7 @@ export default function WordList({wordList}) {
 
   const words = wordList.map((word, index) =>
     <li key={index}>
-      {word.word}- {word.def}
+      {word.text}- {word.definition}
     </li>
   );
 

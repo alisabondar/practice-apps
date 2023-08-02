@@ -14,12 +14,13 @@ const App = () => {
   // set state with useEffect
   // this will be executed every time the site is rendered
   useEffect(() => {
-    axios.get('/fetch')
-      .then(response => response.json())
-      .then(json => console.log(json))
+    return axios.get('/fetch')
+      .then(response => {
+        console.log(response.data);
+        setWords(response.data);
+      })
       .catch(err => console.log('Could not fetch data', err))
-  }, [words])
-  // only changes if words is different!
+  }, []);
 
   return (
     <div>
