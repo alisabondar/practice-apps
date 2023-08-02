@@ -4,7 +4,10 @@ mongoose.connect('mongodb://localhost/dictionary', {useNewUrlParser: true, useUn
 
 // 2. Set up any schema and models needed by the app
 const dictSchema = new mongoose.Schema({
-  text: String,
+  text: {
+    type: String,
+    unique: true
+  },
   definition: String
 })
 

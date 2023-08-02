@@ -8,9 +8,6 @@ let dictionary = (req, res) => {
     method: 'get',
     url: `https://api.dictionaryapi.dev/api/v2/entries/en/${req.body.data}`
   })
-    // .then(result => {
-    //   res.json(result.data[0].meanings);
-    // })
     .catch(err => console.error(err));
 }
 

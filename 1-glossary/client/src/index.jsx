@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import { render } from "react-dom";
-import Add from './components/add.jsx';
 import Search from './components/search.jsx';
 import WordList from './components/wordList.jsx';
 import axios from 'axios';
@@ -8,8 +7,7 @@ import axios from 'axios';
 const App = () => {
 
   const [words, setWords] = useState([]);
-
-  // optimization - create separate func for get req
+  const [addWord, setAddWord] = useState('');
 
   // set state with useEffect
   // this will be executed every time the site is rendered
@@ -22,13 +20,34 @@ const App = () => {
       .catch(err => console.log('Could not fetch data', err))
   }, []);
 
+  let handleClick = () => {
+    axios.post('/dict', {data: addWord})
+      .catch(err => console.error(err));
+
+    return axios.get('/fetch')
+      .then(response => {
+        console.log(response.data);
+        setWords(response.data);
+      })
+      .catch(err => console.error(err));
+  }
+
   return (
     <div>
+      <div>
+        <h1>Glossary</h1>
+      </div>
       <div>
         <Search />
       </div>
       <div>
-        <Add />
+        <form onSubmit={handleClick}>
+          <input
+            onChange={e => setAddWord(e.target.value)}
+            placeholder='Add word here...'
+          />
+          <button onClick={handleClick}>Add</button>
+        </form>
       </div>
       <div>
         <ul><WordList wordList ={words}/></ul>
