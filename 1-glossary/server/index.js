@@ -39,6 +39,14 @@ app.delete('/delete', (req, res) => {
     .catch(err => console.log('Cannot find word to delete', err));
 })
 
+app.put('/put', (req, res) => {
+  console.log('put req', req.body);
+  // find word and replace definition
+  mongo.Dict.replaceOne({text: req.body.data[0]}, {text: req.body.data[0], definition: req.body.data[1]})
+    .then(() => res.send('successfully edited'))
+    .catch(err => console.log('Cannot find word to edit', err));
+})
+
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
