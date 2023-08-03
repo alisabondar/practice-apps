@@ -20,6 +20,12 @@ app.get('/fetch', (req, res) => {
     .catch(err => console.log('Cannot fetch data', err));
 })
 
+app.get('/search', (req, res) => {
+  mongo.Dict.findOne({text: req.body.data})
+    .then(word => res.json(word))
+    .catch(err => console.log('Cannot fetch data', err));
+})
+
 app.post('/dict', (req, res) => {
   // call dict API
   // store results into db

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import words from '../index.jsx';
 import axios from 'axios';
 
 export default function WordList({ wordList, fetch }) {

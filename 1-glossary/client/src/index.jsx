@@ -8,8 +8,17 @@ const App = () => {
 
   const [words, setWords] = useState([]);
   const [addWord, setAddWord] = useState('');
+  // create new state for searched word
+  const [searched, setSearched] = useState([]);
 
-  // create get function
+  // set state with useEffect
+  // this will be executed every time the site is rendered
+  useEffect(() => {
+    console.log('rerendering')
+    fetch();
+  }, []);
+
+  // create get function that sets state
   const fetch = () => {
     return axios.get('/fetch')
       .then(response => {
@@ -18,18 +27,30 @@ const App = () => {
       .catch(err => console.log('Could not fetch data', err))
   };
 
-  // set state with useEffect
-  // this will be executed every time the site is rendered
-  useEffect(() => {
-    console.log('rerendering')
-    return fetch();
-  }, []);
-
   // add word and rerender
   let handleClick = () => {
     axios.post('/dict', {data: addWord})
-      .then(() => useEffect())
+      .then(() => fetch())
       .catch(err => console.error(err));
+  }
+
+  // function to pass down to search child
+  let handleSearch = (term) => {
+    // FILTER CURRENT WORDS
+    // set new state with single word
+    var searched = words.filter(word => word.text === term);
+
+    setSearched(searched);
+    // fetch();
+  }
+
+  // conditionally render wordList
+  let whichWords = () => {
+    if (searched.length > 0) {
+      return searched;
+    } else {
+      return words;
+    }
   }
 
   return (
@@ -38,7 +59,7 @@ const App = () => {
         <h1>Glossary</h1>
       </div>
       <div>
-        <Search />
+        <Search handleSearch={handleSearch}/>
       </div>
       <div>
         <form onSubmit={handleClick}>
@@ -50,7 +71,7 @@ const App = () => {
         </form>
       </div>
       <div>
-        <ul><WordList wordList ={words} fetch={fetch}/></ul>
+        <ul><WordList wordList ={whichWords()} fetch={fetch}/></ul>
       </div>
     </div>
   );
