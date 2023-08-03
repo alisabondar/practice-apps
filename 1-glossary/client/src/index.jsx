@@ -9,27 +9,28 @@ const App = () => {
   const [words, setWords] = useState([]);
   const [addWord, setAddWord] = useState('');
 
-  // set state with useEffect
-  // this will be executed every time the site is rendered
-  useEffect(() => {
+  // create get function
+  const fetch = () => {
+    console.log('made it');
     return axios.get('/fetch')
       .then(response => {
-        console.log(response.data);
         setWords(response.data);
       })
       .catch(err => console.log('Could not fetch data', err))
+  };
+
+  // set state with useEffect
+  // this will be executed every time the site is rendered
+  useEffect(() => {
+    fetch();
   }, []);
 
+  // add word and rerender
   let handleClick = () => {
     axios.post('/dict', {data: addWord})
+      .then(() => useEffect())
       .catch(err => console.error(err));
-
-    return axios.get('/fetch')
-      .then(response => {
-        console.log(response.data);
-        setWords(response.data);
-      })
-      .catch(err => console.error(err));
+    // fetch();
   }
 
   return (
@@ -46,11 +47,11 @@ const App = () => {
             onChange={e => setAddWord(e.target.value)}
             placeholder='Add word here...'
           />
-          <button onClick={handleClick}>Add</button>
+          <button>Add</button>
         </form>
       </div>
       <div>
-        <ul><WordList wordList ={words}/></ul>
+        <ul><WordList wordList ={words} state={fetch}/></ul>
       </div>
     </div>
   );

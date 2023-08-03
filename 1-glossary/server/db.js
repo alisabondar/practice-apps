@@ -15,6 +15,7 @@ const dictSchema = new mongoose.Schema({
 const Dict = mongoose.model('Dictionary', dictSchema);
 
 dictSchema.methods.save = (req, res) => {
+  // how to refresh if encounter duplicate key/word...
   Dict.create({text: req[0].word, definition: req[0].meanings[0].definitions[0].definition})
     .catch(err => console.log('Cannot add to database', err));
 

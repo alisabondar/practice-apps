@@ -32,6 +32,13 @@ app.post('/dict', (req, res) => {
     .catch(err => console.error(err));
 })
 
+app.delete('/delete', (req, res) => {
+  console.log(req.body);
+  mongo.Dict.deleteOne({text: req.body.text})
+    .then(() => console.log('successfully deleted'))
+    .catch(err => console.log('Cannot find word to delete', err));
+})
+
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
