@@ -33,9 +33,9 @@ app.post('/dict', (req, res) => {
 })
 
 app.delete('/delete', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   mongo.Dict.deleteOne({text: req.body.text})
-    .then(() => console.log('successfully deleted'))
+    .then(() => res.send('successfully deleted'))
     .catch(err => console.log('Cannot find word to delete', err));
 })
 

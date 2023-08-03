@@ -11,7 +11,6 @@ const App = () => {
 
   // create get function
   const fetch = () => {
-    console.log('made it');
     return axios.get('/fetch')
       .then(response => {
         setWords(response.data);
@@ -22,7 +21,8 @@ const App = () => {
   // set state with useEffect
   // this will be executed every time the site is rendered
   useEffect(() => {
-    fetch();
+    console.log('rerendering')
+    return fetch();
   }, []);
 
   // add word and rerender
@@ -30,7 +30,6 @@ const App = () => {
     axios.post('/dict', {data: addWord})
       .then(() => useEffect())
       .catch(err => console.error(err));
-    // fetch();
   }
 
   return (
@@ -51,7 +50,7 @@ const App = () => {
         </form>
       </div>
       <div>
-        <ul><WordList wordList ={words} state={fetch}/></ul>
+        <ul><WordList wordList ={words} fetch={fetch}/></ul>
       </div>
     </div>
   );

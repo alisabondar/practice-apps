@@ -2,15 +2,15 @@ import { useState } from 'react';
 import words from '../index.jsx';
 import axios from 'axios';
 
-export default function WordList({ wordList, state }) {
+export default function WordList({ wordList, fetch }) {
 
   // add edit and delete functionality
-  console.log(state);
 
   let deleteHandler = (e) => {
-    axios.delete('/delete', {data: {text: e.target.name}})
-      .then(response => {
-      state();
+    return axios.delete('/delete', {data: {text: e.target.name}})
+      .then(() => {
+        console.log('fetching');
+        fetch();
       })
       .catch(err => console.log('Cannot delete', err));
   }
