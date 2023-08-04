@@ -17,15 +17,10 @@ app.use(sessionHandler);
 app.use(logger);
 
 // Serves up all static and generated assets in a specified folder.
-app.use(express.static(path.join(__dirname, /* FILL ME IN */)));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-/****
- *
- *
- * Other routes here....
- *
- *
- */
+// ROUTES HERE
+
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
