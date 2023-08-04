@@ -16,7 +16,20 @@ db.connectAsync()
   .then(() =>
     // Expand this table definition as needed:
     db.queryAsync(
-      "CREATE TABLE IF NOT EXISTS responses (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY)"
+      `CREATE TABLE IF NOT EXISTS responses (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, cookie_id CHAR,
+        name CHAR,
+        email CHAR,
+        password CHAR,
+        addressLine1 CHAR,
+        addressLine2 CHAR,
+        city CHAR,
+        state CHAR,
+        zip INT,
+        credit_card_num INT,
+        expiration INT,
+        cvv INT,
+        billing_zip INT)`
     )
   )
   .catch((err) => console.log(err));

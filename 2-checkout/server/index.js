@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const bodyParser = require('body-parser')
 const sessionHandler = require("./middleware/session-handler");
 const logger = require("./middleware/logger");
 
@@ -8,6 +9,7 @@ const logger = require("./middleware/logger");
 const db = require("./db");
 
 const app = express();
+
 
 // Adds `req.session_id` based on the incoming cookie value.
 // Generates a new session if one does not exist.
@@ -18,8 +20,12 @@ app.use(logger);
 
 // Serves up all static and generated assets in a specified folder.
 app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(bodyParser.json());
 
 // ROUTES HERE
+app.post('/userData', (req, res) => {
+  console.log(req.body.data);
+})
 
 
 app.listen(process.env.PORT);

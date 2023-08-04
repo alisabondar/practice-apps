@@ -49,7 +49,7 @@ const App = () => {
   }
 
   const postData = (obj) => {
-    axios.post('/userData', {body: obj})
+    axios.post('/userData', {data: obj})
       .catch(err => console.log('Could not post data', err));
   }
 
