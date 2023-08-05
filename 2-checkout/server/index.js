@@ -24,9 +24,13 @@ app.use(bodyParser.json());
 
 // ROUTES HERE
 app.post('/userData', (req, res) => {
-  console.log(req.body.data);
+  var info = req.body.data;
+  db.query('INSERT INTO responses (cookieID, name, email, pass, addLine1, addLine2, city, state, zip, ccnum, exp, cvv, billzip) \ values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [info.cookie, info.name, info.email, info.pass, info.line1, info.line2, info.city, info.state, info.zipcode, info.ccnum, info.exp, info.cvv, info.billzip], function(err) {if (err) {
+    console.log(err);
+  } else {
+    console.log('success');
+  }})
 })
-
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
